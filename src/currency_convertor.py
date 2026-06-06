@@ -9,10 +9,14 @@ different currencies using the ExchangeRate-API.
 import requests
 from requests.exceptions import RequestException
 from typing import Optional
+from cachetools import cached, TTLCache
+
 
 API_BASE_URL = "https://api.exchangerate-api.com/v4/latest/"
+# Cache exchange rates for 1 hour to reduce API calls and improve performance
+cache = TTLCache(maxsize=100, ttl=60*60)
 
-
+@cached(cache)
 def get_exchange_rate(base_currency: str, target_currency: str) -> Optional[float]:
     """
     Fetch the live exchange rate for a given currency pair.
