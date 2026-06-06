@@ -22,7 +22,6 @@ def main() -> None:
         "you wish to convert, and click the **Convert** button to see the result."
     )
 
-    # Input fields
     base_currency = st.selectbox("Select the base currency", CURRENCIES, index=0)
     target_currency = st.selectbox("Select the target currency", CURRENCIES, index=26)
 
@@ -39,12 +38,11 @@ def main() -> None:
         
         if exchange_rate is not None:
             converted_amount = convert_currency(amount, exchange_rate)
-            st.success(f"✅ {amount} {base_currency} is equal to {converted_amount:.2f} {target_currency}")
-            
+            st.success("✅ Exchange rate retrieved successfully!")
             col1, col2, col3 = st.columns(3)
             
             with col1:
-                st.metric("Base Currency", value=f"{amount:.2f} {base_currency}")
+                st.metric(f"{base_currency}", value=f"{amount:.2f}")
                 
             with col2:
                 st.markdown(
@@ -53,12 +51,18 @@ def main() -> None:
                 )
                 
             with col3:
-                st.metric("Target Currency", value=f"{converted_amount:.2f} {target_currency}")
+                st.metric(f"{target_currency}", value=f"{converted_amount:.2f}")
         else:
             st.error("Failed to retrieve exchange rate. Please check your connection or try again later.")
 
     st.markdown("---")
     st.markdown("### About This tool")
+    st.markdown(
+        "This currency converter is built using Python and Streamlit, leveraging the "
+        "ExchangeRate-API to provide real-time exchange rates. It is designed to be "
+        "simple, fast, and user-friendly, making it easy for anyone to convert currencies "
+        "with just a few clicks."
+    )
 
 
 if __name__ == "__main__":
